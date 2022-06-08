@@ -1,0 +1,45 @@
+#creating database
+
+show databases;
+create database tweets;
+use tweets;
+select database();
+
+#dropping database
+
+drop database tweets;
+
+#creating tables
+
+create database tweets;
+use tweets;
+create table tweet
+(
+name varchar(15),
+content varchar(150),
+favorites int
+);
+
+#how to check the table is created
+show tables;
+desc tweet;
+show columns from tweet;
+
+#delete table (remember once you drop table you can not recover from it)
+drop table tweet;
+
+# creating second database and table in it.
+
+create database Fam;
+use Fam;
+create table family
+(
+name varchar(18),
+age int,
+profession varchar(20)
+);
+show tables;
+desc family;
+drop table family;
+drop database Fam;
+show databases;
