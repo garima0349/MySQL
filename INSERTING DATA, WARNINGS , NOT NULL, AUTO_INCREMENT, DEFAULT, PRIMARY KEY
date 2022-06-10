@@ -1,0 +1,149 @@
+create database family;
+show databases;
+use family;
+
+#create table fam1 (inserting data into table)
+
+create table fam1
+(
+name varchar(20),
+age int);
+
+insert into fam1(name, age)
+values('Ohio',21);
+
+#how to check data is inserted
+
+select * from fam1;
+
+#inserting multiple data
+
+insert into fam1(name,age)
+values('cali',23),
+('ala',25),
+('loui',26),
+('ark',23);
+
+select * from fam1;
+
+#show warnings 
+
+#1. data truncated: text value is more than defined in varchar
+
+insert into fam1(name, age)
+values('hi my name is cali. nice to meet you. hope you are doing fine', 34);
+
+
+show warnings;
+
+select * from fam1;
+
+#2 wrong data type entered
+
+insert into fam1(name, age)
+values('ohio','abcde');
+
+show warnings;
+
+select * from fam1;
+
+#3 field doesn't have specified value
+
+insert into fam1(name)
+values('ala');
+
+select * from fam1;
+
+insert into fam1(age)
+values(56);
+
+select * from fam1;
+
+#to check warnings
+
+show warnings;
+
+#NULL means value is unknown And Not NULL (you can not leave empty means it is mandatory )
+
+desc fam1;
+
+create table fam2(
+name varchar(20) NOT NULL,
+age int NOT NULL);
+
+DESC fam2;
+
+insert into fam1(name)
+values('nev');
+
+select * from fam1;
+
+
+insert into fam2(name)
+values('nev');
+
+select * from fam2;
+
+insert into fam2(age)
+values(20);
+
+select * from fam2;
+
+
+#Using Default
+
+create table fam3(
+name varchar(20) NOT NULL DEFAULT 'UNNAME',
+age int NOT NULL DEFAULT 99);
+
+INSERT INTO fam3(name)
+values('wis');
+
+insert into fam3(age)
+values(45);
+
+insert into fam3() values();
+
+insert into fam3(name , age)
+values('ari',23);
+
+select * from fam3;
+
+desc fam3;
+
+#PRIMARY KEY- uniquely identifable and auto_increment 
+
+create table fam4(
+id int not null auto_increment primary key,
+name varchar(20) not null,
+age int not null);
+
+
+insert into fam4(name, age)
+values('ida', 24),
+('sea',23);
+
+select * from fam4;
+
+desc fam4;
+
+#EXCERCISE FOR TODAY
+
+create table people
+( 
+People_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Last_name varchar(50) NOT NULL,
+First_name varchar(50) NOT NULL,
+Nck_name varchar(50),
+Age int NOT NULL,
+Profession varchar(50) NOT NULL DEFAULT 'employed'
+);
+
+INSERT INTO people(Last_name, First_name, Nck_name, Age)
+Values('Singh','Roop','Roo',34);
+
+select * From people;
+
+desc people;
+
+drop table people;
