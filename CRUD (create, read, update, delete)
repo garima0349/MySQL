@@ -1,0 +1,84 @@
+#CRUD (create, read, update, delete)
+
+
+#create: creating tables
+
+create database car;
+use car;
+select database();
+
+create table cars(
+id int not null auto_increment primary key,
+name varchar(50),
+color varchar(50),
+year int);
+
+insert into cars(name, color, year)
+values('Audi', 'blue', 2018),
+('BMW', 'white', 2019),
+('Mer', 'Grey', 2022);
+
+#Read: read data with select and where
+#where gets specific data
+#alias specifies how the data should be displayed back to us or relable the data
+#column order matters
+
+select * from cars;
+
+select name from cars;
+
+select color, name from cars;
+
+select * from cars
+where year=2018;
+
+select * from cars
+where name ='BMW';
+
+select * from cars
+where id=2;
+
+select * from cars
+where color='Grey';
+
+
+select id as car_id from cars;
+
+desc cars;
+
+#update: to alter the data
+
+select * from cars;
+
+select * from cars
+where color='grey';
+
+update cars
+set color='silver'
+where color='grey';
+
+
+select * from cars;
+
+update cars
+set year= 2019
+where name= 'Mer';
+
+select * from cars;
+
+#delete : it delete the entries in the table
+#drop: completely deletes the table
+
+select * from cars;
+
+select * from cars
+where name= 'BMW';
+
+delete from cars
+where name= 'BMW';
+
+delete from cars;
+
+drop table cars;
+
+drop database car;
