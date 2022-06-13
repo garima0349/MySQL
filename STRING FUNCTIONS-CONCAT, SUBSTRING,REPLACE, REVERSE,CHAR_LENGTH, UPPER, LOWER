@@ -1,0 +1,64 @@
+#Strings
+
+create databasee family;
+use family;
+
+#create table
+
+create table fam(
+fam_id INT NOT NULL AUTO_INCREMENT,
+f_name VARCHAR(100),
+l_name VARCHAR(100),
+job VARCHAR(100),
+birth_year INT,
+age INT,
+cousins INT,
+PRIMARY KEY(fam_id));
+
+desc fam;
+
+
+INSERT INTO fam(f_name, l_name, job, birth_year,age,cousins)
+VALUES
+('Smith', 'Carver', 'pilot', 1986,35,2),
+('Norse', 'Gaiman' ,'teacher',1985, 36, 3),
+('Neil', 'Wallace', 'Carpenter',1987, 34, 4),
+('David', 'Rock', 'IT', 1993, 28, 8),
+('John','Dave', 'Eng', 1995, 26, 3);
+
+select * from fam;
+
+
+#how to run a source file
+
+source file_name.sql
+
+#mysql function 1. CONCAT() can take more than two arguements
+
+select concat(f_name, ' ', l_name) as 'full_name ' from fam;
+
+#SUBSTRING
+
+select substring(f_name, 1,4) as 'First name' from books;
+
+select concat(substring(f_name, 1, 4), ' ', l_name)as 'full NAME' from fam;
+
+#REVERSE
+
+select f_name, reverse(f_name) as reverse from fam;
+
+select concat(l_name ,' ',  REVERSE(L_name))from fam;
+
+#REPLACE
+
+select REPLACE(f_name, 'e', 6) as name from fam;
+
+#CHAR_LENGTH
+
+select CHAR_LENGTH(f_name) as length from fam;
+
+#UPPER and LOWER
+
+select UPPER(f_name) from fam;
+
+select concat('My first name is ', UPPER( f_name)) as name from fam;
