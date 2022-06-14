@@ -1,0 +1,73 @@
+#DISTINCT: finding unique values
+
+use family;
+show tables;
+
+desc fam;
+
+insert into fam(f_name,l_name,job,birth_year,age, cousins)
+values('kim', 'smith', 'teacher',1986,35,4);
+  
+insert into fam(f_name,l_name,job,birth_year,age, cousins)
+values('kim', 's%%th', 'teacher',1986,35,4);
+	
+insert into fam(f_name,l_name,job,birth_year,age, cousins)
+values
+('Norse','Gaiman','teacher',1985,36,3),
+('kim', 'smith', 'teacher',1986,35,4);
+
+select * from fam;
+
+select distinct l_name from fam;
+
+select distinct f_name, l_name from fam;
+
+
+#ORDER BY : sorting data : by deault ascending
+
+select l_name from fam
+order by l_name;
+
+select f_name, l_name from fam
+order by l_name, f_name;
+
+select f_name, l_name , birth_year from fam
+order by birth_year desc;
+
+select distinct f_name, l_name , birth_year from fam
+order by birth_year desc;
+
+#LIMIT : specifying number of records
+
+select distinct f_name, l_name , birth_year from fam
+order by birth_year desc LIMIT 3;
+
+select distinct f_name, l_name , birth_year from fam
+order by birth_year desc LIMIT 1,4;
+
+#LIKE AND WILD OPERATORS: finding the required values, %: everything , \: escape sequence
+
+
+select distinct f_name, l_name , birth_year from fam
+where l_name LIKE '%R';
+
+
+select distinct f_name, l_name , birth_year from fam
+where l_name LIKE 'R%';
+
+select distinct f_name, l_name , birth_year from fam
+where l_name LIKE '%R%';
+
+select distinct f_name, l_name , birth_year from fam
+where l_name LIKE '%\%%';
+
+#EXCERCISE
+
+select distinct f_name, birth_year, cousins from fam
+ order by cousins limit 3;
+
+select distinct f_name, l_name from fam  order by l_name, f_name;
+
+select  distinct UPPER(concat('MY FAVORITE FAMILY MEMBER IS ', f_name, ' ' ,l_name, ' !')) as family from fam order by l_name;
+
+
