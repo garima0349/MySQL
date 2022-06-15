@@ -1,0 +1,66 @@
+use family;
+
+#count
+
+select count(*) from fam;
+
+select count(distinct f_name) from fam;
+
+select count(distinct f_name, l_name) from fam;
+
+select f_name from fam
+where f_name like '%a%';
+
+select count(*) from fam
+where f_name like '%a%';
+
+
+#group by
+
+select f_name, count(*) from fam group by f_name;
+
+select birth_year , count(*) from fam group by birth_year;
+
+select concat('In ', birth_year ,' ', count(*), ' familly member(s) born. ')
+as family_members from fam group by birth_year;
+
+
+#min and max
+
+select min(cousins) from fam;
+
+select max(cousins) from fam;
+
+#subquery
+
+select f_name , max(cousins) from fam where cousins=(select max(cousins) from fam);
+
+select f_name, cousins from fam
+order by cousins limit 1;
+
+select f_name, cousins from fam
+order by cousins desc limit 1;
+
+
+select f_name, l_name, min(cousins) from fam
+group by l_name, f_name;
+
+
+#sum
+select sum(cousins) from fam;
+
+select birth_year , sum(cousins)
+from fam
+group by birth_year;
+
+select f_name, l_name , sum(cousins)
+from fam
+group by l_name, f_name;
+
+#AVG
+
+select avg(birth_year) from fam;
+
+
+select f_name, l_name , avg(cousins) from fam
+group by l_name, f_name;
