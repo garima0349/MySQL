@@ -1,0 +1,194 @@
+
+
+create database test;
+
+
+use test;
+
+ CREATE TABLE dogs (name CHAR(5), breed VARCHAR(10));
+ 
+INSERT INTO dogs (name, breed) VALUES ('bob', 'beagle');
+ 
+INSERT INTO dogs (name, breed) VALUES ('robby', 'corgi');
+ 
+INSERT INTO dogs (name, breed) VALUES ('Princess Jane', 'Retriever');
+ 
+SELECT * FROM dogs;
+ 
+INSERT INTO dogs (name, breed) VALUES ('Princess Jane', 'Retrievesadfdsafdasfsafr');
+ 
+SELECT * FROM dogs;
+
+create table items( price decimal(5,2));
+
+
+insert into items(price)
+value(7);
+
+insert into items(price)
+value(79876578);
+
+insert into items(price)
+value(34.88);
+
+insert into items(price)
+value(289.998);
+
+insert into items(price)
+value(1.999);
+
+
+#FLOAT AND DOUBLE
+
+
+CREATE TABLE thingies (price FLOAT);
+ 
+INSERT INTO thingies(price) VALUES (88.45);
+ 
+SELECT * FROM thingies;
+ 
+INSERT INTO thingies(price) VALUES (8877.45);
+ 
+SELECT * FROM thingies;
+ 
+INSERT INTO thingies(price) VALUES (8877665544.45);
+ 
+SELECT * FROM thingies;
+
+#date
+
+create table people(
+name varchar(20),
+birthdate DATE,
+birthtime TIME,
+birthdt DATETIME);
+
+INSERT INTO people (name, birthdate, birthtime, birthdt)
+VALUES('Padma', '1983-11-11', '10:07:35', '1983-11-11 10:07:35');
+ 
+INSERT INTO people (name, birthdate, birthtime, birthdt)
+VALUES('Larry', '1943-12-25', '04:10:42', '1943-12-25 04:10:42');
+
+select * from people;
+
+
+CURDATE() CURTIME() NOW()
+
+select curtime();
+
+select curdate();
+
+insert into people(name, birthdate, birthtime, birthdt)
+values('micro', curdate(), curtime(), now());
+
+select * from people;
+
+#formating date time
+
+DAY()
+DAYNAME()
+DAYOFWEEK()
+DAYOFYEAR()
+
+SELECT NAME, BIRTHDATE, DAY(BIRTHDATE) FROM  people;
+
+SELECT NAME, BIRTHDATE, Dayname(BIRTHDATE) FROM  people;
+
+SELECT NAME, BIRTHDATE, Dayofweek(BIRTHDATE) FROM  people;
+
+SELECT NAME, BIRTHDATE, Dayofyear(BIRTHDATE) FROM  people;
+
+ 
+ SELECT NAME, BIRTHDATE, MONTH(BIRTHDATE) FROM  people;
+ 
+ SELECT NAME, BIRTHDATE, monthname(BIRTHDATE) FROM  people;
+ 
+ 
+ #format
+ 
+ select concat(monthname(birthdate), ' ' month(birthdate)) from people;
+ 
+ #dateformat;
+ 
+ 
+ select date_format('2009-10-04 22:23:00',' %W/%M/%Y') ;
+ 
+ select date_format(birthdt, '%m/%d/%y at %h:%i') from people;
+ 
+ 
+ #datemath
+ 
+ 
+ select name, datediff(now(), birthdate) from people;
+ 
+ 
+select birthdt, date_add(birthdt, interval 1 month) from people;
+
+select birthdt, date_add(birthdt, interval 1 month internal 5 days) from people;
+
+select birthdt, birthdt + interval 2 month from people;
+
+select birthdt, birthdt + interval 2 month +interval 5 hour from people;
+ 
+ 
+ #timestamp
+ 
+ create  table comments(
+ content varchar(100),
+ create_at timestamp default now());
+ 
+ INSERT INTO comments (content) VALUES('nice article');
+ 
+INSERT INTO comments (content) VALUES('Do not like it');
+
+select content, create_at from comments
+order by create_at desc;
+
+
+
+
+ CREATE TABLE comments2 (
+    content VARCHAR(100),
+    changed_at TIMESTAMP DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP
+);
+ 
+ 
+ CREATE TABLE comments2 (
+    content VARCHAR(100),
+    changed_at TIMESTAMP DEFAULT NOW() ON UPDATE NOW()
+);
+
+INSERT INTO comments2(content) VALUES('lol what a funny article');
+ 
+INSERT INTO comments2(content) VALUES('I found this offensive');
+
+#EXCERCISES
+
+select date_format(curdate(),'%m/%d/%y');
+
+SELECT CURTIME();
+ 
+SELECT CURDATE()';
+ 
+SELECT DAYOFWEEK(CURDATE());
+SELECT DAYOFWEEK(NOW());
+SELECT DATE_FORMAT(NOW(), '%w') + 1;
+ 
+SELECT DAYNAME(NOW());
+SELECT DATE_FORMAT(NOW(), '%W');
+ 
+SELECT DATE_FORMAT(CURDATE(), '%m/%d/%Y');
+ 
+SELECT DATE_FORMAT(NOW(), '%M %D at %h:%i');
+ 
+CREATE TABLE tweets1(
+    content VARCHAR(140),
+    username VARCHAR(20),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+ 
+INSERT INTO tweets1 (content, username) VALUES('this is my tweet', 'cat');
+SELECT * FROM tweets;
+ 
+INSERT INTO tweets1 (content, username) VALUES('this is my 2nd tweet', 'cat');
+SELECT * FROM tweets;
