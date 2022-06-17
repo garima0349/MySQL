@@ -111,6 +111,6 @@ end as era from fam;
 
 select f_name,
 case when cousins=2 then '*'
-when stock_quantity <=4 then '**'
+when cousins <=4 then '**'
 else '***' end as 'Ratings'
 from fam; 
