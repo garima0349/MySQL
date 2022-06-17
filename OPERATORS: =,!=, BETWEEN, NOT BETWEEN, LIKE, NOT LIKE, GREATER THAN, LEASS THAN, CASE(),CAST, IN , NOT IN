@@ -1,0 +1,116 @@
+not equal !=
+
+use database family;
+
+select f_name, birth_year from fam where birth_year=1986;
+
+selectr f_name, birth_year from fam where birth_year!= 1986;
+
+#not like
+
+select f_name from fam
+where f_name like 'K%';
+
+select f_name from fam
+where f_name not like 'K%';
+
+#GReater THAN
+
+select f_name, birth_year from fam
+where birth_year > 2000;
+
+#>=
+
+select f_name, birth_year from fam
+where birth_year >= 2000;
+
+select 99>1;
+select 99>678;
+
+
+#< <=
+
+select f_name, birth_year from fam
+where birth_year < 1993;
+
+select f_name , birth_year from fam
+where birth_year <= 1993;
+
+
+#LOGICAL AND
+
+
+select f_name, l_name from fam
+where l_name ='rock' && birth_year >1994;
+
+select f_namre, l_name, birth__year from fam 
+where l_name ='rock' && birth_year >1994 && f_name LIKE '%david%';
+
+#LOGICAL OR ||
+
+select f_name , birth_year  from fam
+where f_name= 'rock' || birth_year > 1993;
+
+select f_name , birth_year  from fam
+where f_name= 'rock' || birth_year > 1993 ||f_name LIKE '%kim%';
+
+#BETWEEN
+
+select * from fam
+where birth_year between 1986 and 1987;
+
+
+#not between
+
+select * from fam
+where birth_year not between 1986 and 1987;
+
+#cast
+
+select cast('2022-12-15' as datetime);
+
+SELECT name, birthdt FROM people WHERE birthdt BETWEEN '1980-01-01' AND '2000-01-01';
+ 
+SELECT 
+    name, 
+    birthdt 
+FROM people
+WHERE 
+    birthdt BETWEEN CAST('1980-01-01' AS DATETIME)
+    AND CAST('2000-01-01' AS DATETIME);
+  
+	
+#in and not in
+
+use fam;
+
+select f_name, l_name from fam
+where l_name = 'rock' OR l_name ='Gaiman' OR author_lname = 'Smith';
+
+select f_name, l_name from fams where l_name IN( 'rock' , 'gaiman', 'smith');
+
+select f_name, l_name from fams where l_name NOT IN( 'rock' , 'gaiman', 'smith');
+
+
+select f_name, l_name, birth_year from fam
+where birth_year >1986
+and birth_year not in(1985,1993);
+
+select f_name, birth_year, l_name from fam
+where birth_year >1980 and 
+birth_year % 2 != 0;
+
+
+#CASE STATEMENTs
+
+
+select f_name, birth_year, 
+case when birth_year> 1990 then 'Modern'
+else '80 s' 
+end as era from fam;
+
+select f_name,
+case when cousins=2 then '*'
+when stock_quantity <=4 then '**'
+else '***' end as 'Ratings'
+from fam; 
