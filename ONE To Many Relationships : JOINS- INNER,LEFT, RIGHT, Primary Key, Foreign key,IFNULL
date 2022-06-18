@@ -1,0 +1,94 @@
+CREATE DATABASE STUDENT;
+USE STUDENT;
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100)
+);
+ 
+ 
+CREATE TABLE papers (
+    title VARCHAR(100),
+    grade INT,
+    student_id INT,
+    FOREIGN KEY (student_id) 
+        REFERENCES students(id)
+        ON DELETE CASCADE
+);
+-- The Starter Data
+
+INSERT INTO students (first_name) VALUES 
+('Cal'), 
+('Sam'), 
+('Ram'), 
+('Caty'), 
+('Lima');
+ 
+INSERT INTO papers (student_id, title, grade ) VALUES
+(1, 'My First Book ', 90),
+(1, 'My Second Book ', 85),
+(2, ' Through The Ages', 64),
+(2, 'The Art of The smile', 78),
+(4, 'Independence', 89);
+
+
+select  first_name, title, grade
+from students
+inner join papers
+on students.id = papers.student_id;
+
+select  first_name, title, grade
+from students
+join papers
+on students.id = papers.student_id
+order by grade desc;
+
+
+select first_name, title, grade from students
+left join papers
+on students.id = papers.student_id;
+
+select first_name, title, ifnull(grade, 0) as 'grade' from students
+left join papers
+on students.id = papers.student_id;
+
+select first_name , ifnull(avg(grade),'0') as 'average' from students
+left join papers
+on students.id = papers.student_id
+group by first_name;
+
+select first_name , ifnull(avg(grade),'0') as 'average' ,
+case when  avg(grade) >= 70 then 'passing'
+else 'failing' end as 'passing status'
+from students
+left join papers
+on students.id = papers.student_id
+group by first_name
+order by grade desc;
+
+
+select * from students
+left join papers
+on students.id = papers.student_id;
+
+select * from papers
+left join students
+on students.id = papers.student_id;
+
+select * from students
+right join papers
+on students.id = papers.student_id;
+
+
+select * from papers
+right join students
+on students.id = papers.student_id;
+
+
+select * from students
+inner join papers
+on students.id = papers.student_id;
+
+select * from papers
+inner join students
+on students.id = papers.student_id;
