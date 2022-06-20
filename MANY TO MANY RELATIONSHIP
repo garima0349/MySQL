@@ -1,0 +1,330 @@
+#many to many relationsip
+
+create database TV;
+use TV;
+
+create table reviewers(
+id int not null auto_increment primary key,
+first_name varchar(100),
+last_name varchar(100));
+
+create table series(
+id int not null auto_increment primary key,
+title varchar(100),
+released_year year(4),
+genre varchar(100));
+
+ create table reviews(
+    id int auto_increment not null primary key,
+  rating decimal(2,1),
+	series_id int,
+	reviewers_id int,
+	foreign key(series_id) references series(id),
+	foreign key(reviewers_id) references reviewers(id));
+	
+INSERT INTO series (title, released_year, genre) VALUES
+    ('Archer', 2009, 'Animation'),
+    ('Arrested Development', 2003, 'Comedy'),
+    ("Bob's Burgers", 2011, 'Animation'),
+    ('Bojack Horseman', 2014, 'Animation'),
+    ("Breaking Bad", 2008, 'Drama'),
+    ('Curb Your Enthusiasm', 2000, 'Comedy'),
+    ("Fargo", 2014, 'Drama'),
+    ('Freaks and Geeks', 1999, 'Comedy'),
+    ('General Hospital', 1963, 'Drama'),
+    ('Halt and Catch Fire', 2014, 'Drama'),
+    ('Malcolm In The Middle', 2000, 'Comedy'),
+    ('Pushing Daisies', 2007, 'Comedy'),
+    ('Seinfeld', 1989, 'Comedy'),
+    ('Stranger Things', 2016, 'Drama');
+
+
+INSERT INTO reviewers (first_name, last_name) VALUES
+    ('Thomas', 'Stoneman'),
+    ('Wyatt', 'Skaggs'),
+    ('Kimbra', 'Masters'),
+    ('Domingo', 'Cortes'),
+    ('Colt', 'Steele'),
+    ('Pinkie', 'Petit'),
+    ('Marlon', 'Crafford');
+	
+	INSERT INTO reviews(series_id, reviewers_id, rating) VALUES
+    (1,1,8.0),(1,2,7.5),(1,3,8.5),(1,4,7.7),(1,5,8.9),
+    (2,1,8.1),(2,4,6.0),(2,3,8.0),(2,6,8.4),(2,5,9.9),
+    (3,1,7.0),(3,6,7.5),(3,4,8.0),(3,3,7.1),(3,5,8.0),
+    (4,1,7.5),(4,3,7.8),(4,4,8.3),(4,2,7.6),(4,5,8.5),
+    (5,1,9.5),(5,3,9.0),(5,4,9.1),(5,2,9.3),(5,5,9.9),
+    (6,2,6.5),(6,3,7.8),(6,4,8.8),(6,2,8.4),(6,5,9.1),
+    (7,2,9.1),(7,5,9.7),
+    (8,4,8.5),(8,2,7.8),(8,6,8.8),(8,5,9.3),
+    (9,2,5.5),(9,3,6.8),(9,4,5.8),(9,6,4.3),(9,5,4.5),
+    (10,5,9.9),
+    (13,3,8.0),(13,4,7.2),
+    (14,2,8.5),(14,3,8.9),(14,4,8.9);
+	
+	select * from reviewers;
+	select * from series;
+	select * from reviews;
+	
+select title, rating from series 
+join reviews
+on series.id =reviews.series_id;
+
++----------------------+--------+
+| title                | rating |
++----------------------+--------+
+| Archer               |    8.0 |
+| Archer               |    7.5 |
+| Archer               |    8.5 |
+| Archer               |    7.7 |
+| Archer               |    8.9 |
+| Arrested Development |    8.1 |
+| Arrested Development |    6.0 |
+| Arrested Development |    8.0 |
+| Arrested Development |    8.4 |
+| Arrested Development |    9.9 |
+| Bob's Burgers        |    7.0 |
+| Bob's Burgers        |    7.5 |
+| Bob's Burgers        |    8.0 |
+
+select distinct title, avg(rating) as avg_rating from series
+join reviews
+on series.id=reviews.series_id
+group by title
+order by avg_rating;
+
++----------------------+------------+
+| title                | avg_rating |
++----------------------+------------+
+| General Hospital     |    5.38000 |
+| Bob's Burgers        |    7.52000 |
+| Seinfeld             |    7.60000 |
+| Bojack Horseman      |    7.94000 |
+| Arrested Development |    8.08000 |
+| Curb Your Enthusiasm |    8.12000 |
+| Archer               |    8.12000 |
+| Freaks and Geeks     |    8.60000 |
+| Stranger Things      |    8.76667 |
+| Breaking Bad         |    9.36000 |
+| Fargo                |    9.40000 |
+| Halt and Catch Fire  |    9.90000 |
++----------------------+------------+   
+  
+   
+select title, avg(rating) as avg_rating from series
+join reviews
+on series.id=reviews.series_id
+group by series.id
+order by avg_rating;	
+	
+	
++----------------------+------------+
+| title                | avg_rating |
++----------------------+------------+
+| General Hospital     |    5.38000 |
+| Bob's Burgers        |    7.52000 |
+| Seinfeld             |    7.60000 |
+| Bojack Horseman      |    7.94000 |
+| Arrested Development |    8.08000 |
+| Archer               |    8.12000 |
+| Curb Your Enthusiasm |    8.12000 |
+| Freaks and Geeks     |    8.60000 |
+| Stranger Things      |    8.76667 |
+| Breaking Bad         |    9.36000 |
+| Fargo                |    9.40000 |
+| Halt and Catch Fire  |    9.90000 |
+	
+	
+select first_name, last_name, rating from reviewers
+join reviews
+on reviewers.id= reviews.reviewers_id;
+
++------------+-----------+--------+
+| first_name | last_name | rating |
++------------+-----------+--------+
+| Thomas     | Stoneman  |    8.0 |
+| Thomas     | Stoneman  |    8.1 |
+| Thomas     | Stoneman  |    7.0 |
+| Thomas     | Stoneman  |    7.5 |
+| Thomas     | Stoneman  |    9.5 |
+| Wyatt      | Skaggs    |    7.5 |
+| Wyatt      | Skaggs    |    7.6 |
+| Wyatt      | Skaggs    |    9.3 |
+| Wyatt      | Skaggs    |    6.5 |
+| Wyatt      | Skaggs    |    8.4 |
+| Wyatt      | Skaggs    |    9.1 |
+| Wyatt      | Skaggs    |    7.8 |
+| Wyatt      | Skaggs    |    5.5 |
+
+select title  as unreviewed_series from series
+left join reviews
+on series.id=reviews.series_id 
+where rating is null;
+
++-----------------------+
+| unreviewed_series     |
++-----------------------+
+| Malcolm In The Middle |
+| Pushing Daisies       |
++-----------------------+
+
+select genre, avg(rating) as avg_rating from series
+join reviews
+on series.id=reviews.series_id
+group by genre;
+
++-----------+------------+
+| genre     | avg_rating |
++-----------+------------+
+| Animation |    7.86000 |
+| Comedy    |    8.16250 |
+| Drama     |    8.04375 |
++-----------+------------+
+
+select genre, round(avg(rating),2) as avg_rating from series
+join reviews
+on series.id=reviews.series_id
+group by genre;
+
++-----------+------------+
+| genre     | avg_rating |
++-----------+------------+
+| Animation |       7.86 |
+| Comedy    |       8.16 |
+| Drama     |       8.04 |
++-----------+------------+
+
+select first_name,
+last_name,
+count(rating) as count,
+ifnull(min(rating,0) as min, 
+ifnull(max(rating,0) as max,
+round(ifnull(avg(rating),0),2 )as avg ,
+case when count(rating)> 0 then 'active' 
+else 'inactive' 
+end as 'status'
+from reviewers
+left join reviews
+on reviewers.id = reviews.reviewers_id
+group by reviewers.id;
+
+select first_name,
+last_name,
+count(rating) as count,
+ifnull(min(rating),0) as min, 
+ifnull(max(rating),0) as max,
+round(ifnull(avg(rating),0),2 )as avg ,
+case when count(rating)> 0 then 'active' 
+else 'inactive' 
+end as 'status'
+from reviewers
+left join reviews
+on reviewers.id = reviews.reviewers_id
+group by reviewers.id;
+
++------------+-----------+-------+-----+-----+------+----------+
+| first_name | last_name | count | min | max | avg  | status   |
++------------+-----------+-------+-----+-----+------+----------+
+| Thomas     | Stoneman  |     5 | 7.0 | 9.5 | 8.02 | active   |
+| Wyatt      | Skaggs    |     9 | 5.5 | 9.3 | 7.80 | active   |
+| Kimbra     | Masters   |     9 | 6.8 | 9.0 | 7.99 | active   |
+| Domingo    | Cortes    |    10 | 5.8 | 9.1 | 7.83 | active   |
+| Colt       | Steele    |    10 | 4.5 | 9.9 | 8.77 | active   |
+| Pinkie     | Petit     |     4 | 4.3 | 8.8 | 7.25 | active   |
+| Marlon     | Crafford  |     0 | 0.0 | 0.0 | 0.00 | inactive |
+
+
+select title, rating, concat(first_name, ' ', last_name) as reviewer from series
+join reviews
+on series.id=reviews.series_id
+join reviewers
+on reviewers.id= reviews.reviewers_id
+order by title;
+
++----------------------+--------+-----------------+
+| title                | rating | reviewer        |
++----------------------+--------+-----------------+
+| Archer               |    8.0 | Thomas Stoneman |
+| Archer               |    7.7 | Domingo Cortes  |
+| Archer               |    8.5 | Kimbra Masters  |
+| Archer               |    7.5 | Wyatt Skaggs    |
+| Archer               |    8.9 | Colt Steele     |
+| Arrested Development |    6.0 | Domingo Cortes  |
+| Arrested Development |    8.0 | Kimbra Masters  |
+| Arrested Development |    8.4 | Pinkie Petit    |
+| Arrested Development |    9.9 | Colt Steele     |
+| Arrested Development |    8.1 | Thomas Stoneman |
+| Bob's Burgers        |    7.0 | Thomas Stoneman |
+| Bob's Burgers        |    8.0 | Domingo Cortes  |
+
+#joining 2 tables
+
+select first_name , rating from reviewers
+join reviews
+on reviewers.id= reviews.reviewers_id;
+
++------------+--------+
+| first_name | rating |
++------------+--------+
+| Thomas     |    8.0 |
+| Thomas     |    8.1 |
+| Thomas     |    7.0 |
+| Thomas     |    7.5 |
+| Thomas     |    9.5 |
+| Wyatt      |    7.5 |
+| Wyatt      |    7.6 |
+| Wyatt      |    9.3 |
+| Wyatt      |    6.5
+
+select title , rating from series
+join reviews
+on series.id= reviews.series_id;
+
++----------------------+--------+
+| title                | rating |
++----------------------+--------+
+| Archer               |    8.0 |
+| Archer               |    7.5 |
+| Archer               |    8.5 |
+| Archer               |    7.7 |
+| Archer               |    8.9 |
+| Arrested Development |    8.1 |
+| Arrested Development |    6.0 |
+
+
+#joining 3 tables
+
+select title , rating, first_name from series
+join reviews
+on series.id= reviews.series_id
+join reviewers
+on reviewers.id=reviews.reviewers_id;
+
++----------------------+--------+------------+
+| title                | rating | first_name |
++----------------------+--------+------------+
+| Archer               |    8.0 | Thomas     |
+| Arrested Development |    8.1 | Thomas     |
+| Bob's Burgers        |    7.0 | Thomas     |
+| Bojack Horseman      |    7.5 | Thomas     |
+| Breaking Bad         |    9.5 | Thomas     |
+| Archer               |    7.5 | Wyatt      |
+| Bojack Horseman      |    7.6 | Wyatt      |
+| Breaking Bad         |    9.3 | Wyatt      |
+
+select first_name, rating, title from reviewers
+join reviews
+on reviewers.id= reviews.reviewers_id
+join series
+on series.id=reviews.series_id;
+
++------------+--------+----------------------+
+| first_name | rating | title                |
++------------+--------+----------------------+
+| Thomas     |    8.0 | Archer               |
+| Thomas     |    8.1 | Arrested Development |
+| Thomas     |    7.0 | Bob's Burgers        |
+| Thomas     |    7.5 | Bojack Horseman      |
+| Thomas     |    9.5 | Breaking Bad         |
+| Wyatt      |    7.5 | Archer               |
+| Wyatt      |    7.6 | Bojack Horseman
